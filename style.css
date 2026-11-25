@@ -368,3 +368,222 @@ dialog::backdrop { background: #23382d80; }
   .rule-panel { align-items: start; flex-direction: column; }
   .rule-indicators { margin-left: 0; justify-content: start; }
 }
+
+/* The menu is a folded cover over the garden illustration. */
+.home {
+  --paper: #f4ecd8;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-columns: minmax(0, .94fr) minmax(0, 1.06fr);
+  position: relative;
+  isolation: isolate;
+  background: #203c2c;
+}
+.home-paper {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  min-width: 0;
+  min-height: 0;
+  gap: 10px;
+  padding: max(clamp(12px, 5.3cqh, 27px), env(safe-area-inset-top))
+    clamp(15px, 4.6cqw, 55px)
+    max(clamp(11px, 4.9cqh, 24px), env(safe-area-inset-bottom))
+    max(clamp(16px, 5cqw, 59px), env(safe-area-inset-left));
+  position: relative;
+  z-index: 1;
+  background:
+    repeating-linear-gradient(116deg, #60472704 0 1px, transparent 1px 5px),
+    linear-gradient(145deg, #f9f1dd, var(--paper) 72%, #e7dec3);
+  box-shadow: 12px 0 25px #14241b38;
+}
+.home-paper::after {
+  content: "";
+  width: clamp(9px, 2.8cqw, 31px);
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: calc(100% - 1px);
+  background: linear-gradient(140deg, #e6d9b9, #f1e5cb 68%, #ded1ae);
+  clip-path: polygon(0 0, 100% 22%, 0 100%);
+}
+.home-header { display: flex; align-items: center; }
+.home-language {
+  display: inline-flex;
+  gap: 2px;
+  padding: 2px;
+  border: 1px solid #aaac8e;
+  background: #ece3cb;
+  border-radius: 4px;
+}
+.home-language button {
+  min-height: 30px;
+  min-width: 36px;
+  padding: 0 6px;
+  border: 0;
+  border-radius: 2px;
+  background: transparent;
+  color: #3b5745;
+  font-size: .73rem;
+  font-weight: 650;
+}
+.home-language button[aria-pressed="true"] { background: #365c42; color: #fff8e5; }
+.home-language button:not([aria-pressed="true"]):hover { background: #dfd7bb; }
+.home-content {
+  align-self: center;
+  min-width: 0;
+}
+.home h1 {
+  max-width: 8.8ch;
+  font: 700 clamp(2.45rem, min(8.1cqw, 19cqh), 5.5rem)/.83 var(--serif);
+  color: #244630;
+  letter-spacing: -.045em;
+  text-wrap: balance;
+}
+.home-description {
+  color: #435944;
+  font-size: clamp(.83rem, 1.75cqw, 1.04rem);
+  margin-top: clamp(8px, 3cqh, 15px);
+  line-height: 1.25;
+}
+.home-actions {
+  width: min(100%, 365px);
+  display: grid;
+  grid-template-columns: repeat(2,minmax(0,1fr));
+  gap: clamp(6px, 1.8cqh, 10px);
+  margin-top: clamp(11px, 5cqh, 24px);
+}
+.origami-button {
+  --corner: 13px;
+  --button-top: #fff5dc;
+  --button-bottom: #e8dfc2;
+  --button-fold: #c3b793;
+  --button-edge: #b4a78a;
+  --button-depth: #9d9370;
+  isolation: isolate;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  min-width: 0;
+  min-height: 44px;
+  padding: 0 12px 0 8px;
+  color: #2f4c37;
+  background: transparent;
+  border: 0;
+  border-radius: 3px;
+  filter: drop-shadow(0 2px 0 var(--button-depth));
+  font-size: clamp(.76rem, 1.6cqw, .95rem);
+  font-weight: 650;
+  white-space: nowrap;
+  line-height: 1.1;
+  transition: translate .14s, filter .14s;
+}
+.origami-button::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  border-radius: 4px;
+  clip-path: polygon(0 0, calc(100% - var(--corner)) 0, 100% var(--corner), 100% 100%, 0 100%);
+  box-shadow: inset 0 0 0 1px var(--button-edge);
+  background: linear-gradient(172deg,var(--button-top),var(--button-bottom));
+}
+.origami-button::after {
+  content: "";
+  z-index: -1;
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: var(--corner);
+  height: var(--corner);
+  border-radius: 0 0 0 2px;
+  background: linear-gradient(148deg,var(--button-fold),var(--button-edge));
+  clip-path: polygon(0 0, 100% 100%, 0 100%);
+}
+.origami-button:hover { translate: 0 -2px; filter: drop-shadow(0 4px 0 var(--button-depth)); }
+.origami-button:active { translate: 0 2px; filter: drop-shadow(0 0 0 var(--button-depth)); }
+.origami-button:focus-visible { outline: 2px solid #8f4634; outline-offset: 3px; }
+.origami-primary {
+  --corner: 17px;
+  --button-top: #456e4d;
+  --button-bottom: #294d38;
+  --button-fold: #91ac76;
+  --button-edge: #385e41;
+  --button-depth: #183b29;
+  grid-column: 1 / -1;
+  min-height: 49px;
+  color: #fff8e5;
+  font-size: clamp(.95rem, 2cqw, 1.14rem);
+}
+.origami-question {
+  font: 700 1.13rem/1 var(--serif);
+  display: grid;
+  place-items: center;
+  border: 1px solid #879478;
+  border-radius: 50%;
+  width: 17px;
+  height: 17px;
+  flex: 0 0 17px;
+}
+.home-progress {
+  align-self: end;
+  color: #516249;
+  font-size: .76rem;
+  font-weight: 620;
+  font-variant-numeric: tabular-nums;
+}
+.home-art {
+  min-width: 0;
+  min-height: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  object-position: 52% 53%;
+}
+.home-icon {
+  width: 16px;
+  height: 16px;
+  background: currentColor;
+  clip-path: polygon(50% 2%, 100% 45%, 86% 45%, 86% 96%, 59% 96%, 59% 68%, 41% 68%, 41% 96%, 14% 96%, 14% 45%, 0 45%);
+}
+#level-name:focus { outline: none; }
+
+@container garden-screen (max-height: 365px) {
+  .home-paper { gap: 5px; padding-block: max(8px, env(safe-area-inset-top)) max(8px, env(safe-area-inset-bottom)); }
+  .home h1 { font-size: clamp(2rem, min(8.1cqw, 17.3cqh), 3.75rem); }
+  .home-description { margin-top: 7px; font-size: .8rem; }
+  .home-actions { margin-top: 11px; gap: 6px; }
+  .home-language button { min-height: 26px; }
+}
+@container garden-screen (max-width: 650px) {
+  .home-paper { padding-inline: max(16px, env(safe-area-inset-left)) 14px; }
+  .origami-button { gap: 4px; }
+  .origami-question, .origami-button .grid-icon { flex-basis: 14px; width: 14px; height: 14px; }
+  .origami-question { font-size: .90rem; }
+}
+@container garden-screen (max-width: 480px) and (min-height: 510px) {
+  .home {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: minmax(0, 42%) minmax(0, 1fr);
+  }
+  .home-art { grid-row: 1; object-position: 50% 47%; }
+  .home-paper {
+    grid-row: 2;
+    padding-inline: max(24px, env(safe-area-inset-left)) max(24px, env(safe-area-inset-right));
+  }
+  .home-paper::after {
+    top: auto;
+    bottom: calc(100% - 1px);
+    left: 0;
+    width: 100%;
+    height: 12px;
+    clip-path: polygon(0 0, 100% 100%, 0 100%);
+  }
+  .home h1 { font-size: clamp(2.6rem, 12cqw, 4rem); max-width: 11ch; }
+  .home-description { margin-top: 9px; }
+  .home-actions { margin-top: 15px; }
+  .home-progress { font-size: .76rem; }
+}

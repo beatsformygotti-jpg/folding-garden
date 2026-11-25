@@ -4,6 +4,8 @@ const GardenLocale = (() => {
   const ru = {
     title: 'Складной сад',
     description: 'Складывайте бумагу в трёх измерениях и собирайте цветы. 50 головоломок со сгибами.',
+    home: 'Главное меню', play: 'Играть', resume: 'Продолжить',
+    homeDescription: 'Складывайте бумагу и собирайте цветы.',
     levels: 'Уровни', menu: 'Меню игры', help: 'Как играть', field: 'Игровое поле', sheet: 'Лист бумаги',
     creases: 'Линии сгиба', herbarium: 'Гербарий', collected: 'Собранные цветы',
     undo: 'Отменить ход', restart: 'Начать уровень заново', flip: 'Перевернуть',
@@ -52,6 +54,8 @@ const GardenLocale = (() => {
   const en = {
     title: 'Folding Garden',
     description: 'Fold paper in 3D and collect flowers across 50 mirror-fold puzzles.',
+    home: 'Main Menu', play: 'Play', resume: 'Continue',
+    homeDescription: 'Fold paper and collect flowers.',
     levels: 'Levels', menu: 'Game menu', help: 'How to Play', field: 'Play area', sheet: 'Paper sheet',
     creases: 'Fold lines', herbarium: 'Herbarium', collected: 'Collected flowers',
     undo: 'Undo move', restart: 'Restart level', flip: 'Flip sheet',

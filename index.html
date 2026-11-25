@@ -7,27 +7,49 @@
   <meta name="description" content="Складной сад — головоломка про зеркальные сгибы бумаги и гербарий.">
   <title>Складной сад</title>
   <link rel="icon" href="assets/flower.png" type="image/png">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css?v=origami-menu">
   <script defer src="assets/three.min.js"></script>
   <script defer src="flowers.js"></script>
   <script defer src="variants.js"></script>
   <script defer src="puzzle.js"></script>
-  <script defer src="locale.js"></script>
+  <script defer src="locale.js?v=origami-menu"></script>
   <script defer src="paper.js"></script>
-  <script defer src="game.js"></script>
+  <script defer src="game.js?v=origami-menu"></script>
 </head>
 <body>
   <div class="phone-frame">
     <div class="phone-screen">
       <span class="phone-camera" aria-hidden="true"></span>
-      <main class="stage" id="stage" data-a11y="title" aria-label="Складной сад">
+      <main class="home" id="home" aria-labelledby="home-title">
+        <div class="home-paper">
+          <div class="home-header">
+            <div class="language-switch home-language" data-a11y="language" role="group" aria-label="Язык игры">
+              <button type="button" data-language="ru" lang="ru" aria-label="Русский">RU</button>
+              <button type="button" data-language="en" lang="en" aria-label="English">EN</button>
+            </div>
+          </div>
+          <div class="home-content">
+            <h1 id="home-title" data-text="title">Складной сад</h1>
+            <p class="home-description" data-text="homeDescription">Складывайте бумагу и собирайте цветы.</p>
+            <div class="home-actions">
+              <button type="button" class="origami-button origami-primary" id="home-play"><span id="home-play-label" data-text="play">Играть</span></button>
+              <button type="button" class="origami-button" id="home-levels" aria-haspopup="dialog"><span class="icon grid-icon" aria-hidden="true"></span><span data-text="levels">Уровни</span></button>
+              <button type="button" class="origami-button" id="home-help" aria-haspopup="dialog"><span class="origami-question" aria-hidden="true">?</span><span data-text="help">Как играть</span></button>
+            </div>
+          </div>
+          <p class="home-progress" id="home-progress"></p>
+        </div>
+        <img class="home-art" src="assets/origami-cover.webp" alt="" width="1440" height="1075" fetchpriority="high">
+      </main>
+      <main class="stage" id="stage" data-a11y="title" aria-label="Складной сад" hidden>
         <canvas id="ornament" class="ornament" aria-hidden="true"></canvas>
         <header class="game-head">
           <div>
             <p class="eyebrow" id="level-kicker"></p>
-            <h1 id="level-name"></h1>
+            <h1 id="level-name" tabindex="-1"></h1>
           </div>
           <div class="actions" role="group" data-a11y="menu" aria-label="Меню игры">
+            <button type="button" id="open-home" class="plain icon-only return-home" data-control="home" aria-label="Главное меню"><span class="home-icon" aria-hidden="true"></span></button>
             <button type="button" id="open-levels" class="plain" aria-haspopup="dialog"><span class="icon grid-icon" aria-hidden="true"></span><span data-text="levels">Уровни</span></button>
             <button type="button" id="open-help" class="plain icon-only" data-control="help" aria-label="Как играть" title="Как играть" aria-haspopup="dialog"><span aria-hidden="true">?</span></button>
           </div>

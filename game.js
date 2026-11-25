@@ -5,6 +5,10 @@
   const levels = GardenPuzzle.levels;
   const paperView = $('#paper-view');
   const stage = $('#stage');
+  const home = $('#home');
+  const homePlay = $('#home-play');
+  const homeLabel = $('#home-play-label');
+  const backToHome = $('#open-home');
   const markers = $('#creases');
   const herbarium = $('#flowers');
   const status = $('#status');
@@ -23,7 +27,6 @@
   const legacyStorageKey = 'folding-garden-3d-v1';
   const chapterSize = 10;
   const individualSlots = 12;
-  const view = new GardenPaper($('#paper'), $('#guide'));
   const commitAngle = Math.PI / 2;
   const clamp = (value, min, max) => Math.max(min, Math.min(max, value));
   const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
@@ -47,6 +50,7 @@
   const t = (key, values) => GardenLocale.text(language, key, values);
   let index = levels.findIndex(level => level.id === save.levelId);
   let state;
+  let view;
   let moves = [];
   let selected = null;
   let pointer = null;
@@ -213,7 +217,7 @@
   function renderHelp() {
     const current = $('#current-rules');
     const level = levels[index];
-    const items = levelRules(level).map(key => {
+    const items = (stage.hidden ? [] : levelRules(level)).map(key => {
       const [label, detail] = ruleKeys[key];
       const item = document.createElement('li');
       const title = document.createElement('strong');
@@ -326,15 +330,17 @@
     restart.disabled = locked || !state.history.length;
     levelMenu.disabled = locked;
     help.disabled = locked;
+    backToHome.disabled = locked;
     turnSheet.hidden = !state.back || finished;
     turnSheet.disabled = locked;
     nextLevel.textContent = t(index + 1 < levels.length && !campaignComplete() ? 'next' : 'toLevels');
   }
 
   function drawBoard() {
+    finished = !state.rows.length;
+    if (stage.hidden) return;
     selected = null;
     moves = GardenPuzzle.moves(state);
-    finished = !state.rows.length;
     tip = index === 0 && !state.history.length;
     const level = levels[index];
     $('#level-kicker').textContent = t('levelNumber', { number: index + 1, total: levels.length });
@@ -709,12 +715,51 @@
     list.replaceChildren(...sections);
   }
 
-  levelMenu.addEventListener('click', showLevels);
-  help.addEventListener('click', () => {
+  function drawHome() {
+    const hasProgress = index > 0 || state.history.length > 0 || save.completed.length > 0;
+    homeLabel.textContent = t(hasProgress ? 'resume' : 'play');
+    $('#home-progress').textContent = t('campaign', { done: save.completed.length, total: levels.length });
+  }
+
+  function enterGame() {
+    home.hidden = true;
+    stage.hidden = false;
+    view ??= new GardenPaper($('#paper'), $('#guide'));
+    drawBoard();
+    resize();
+    $('#level-name').focus({ preventScroll: true });
+  }
+
+  function returnHome() {
+    if (busy || pointer) return;
+    stage.hidden = true;
+    home.hidden = false;
+    drawHome();
+    homePlay.focus({ preventScroll: true });
+  }
+
+  function resumeGame() {
+    if (finished && !campaignComplete()) {
+      const unfinished = level => !save.completed.includes(level.id);
+      let next = levels.findIndex((level, i) => i > index && unfinished(level));
+      if (next < 0) next = levels.findIndex(unfinished);
+      if (next >= 0) openLevel(next);
+    }
+    enterGame();
+  }
+
+  function showHelp() {
     renderHelp();
     helpDialog.showModal();
-  });
-  levelsDialog.addEventListener('click', event => {
+  }
+
+  levelMenu.addEventListener('click', showLevels);
+  $('#home-levels').addEventListener('click', showLevels);
+  $('#home-help').addEventListener('click', showHelp);
+  homePlay.addEventListener('click', resumeGame);
+  backToHome.addEventListener('click', returnHome);
+  help.addEventListener('click', showHelp);
+  document.querySelector('.phone-screen').addEventListener('click', event => {
     const target = event.target.closest('[data-language]');
     if (!target || target.dataset.language === language) return;
     language = target.dataset.language;
@@ -726,13 +771,15 @@
     localizeInterface();
     persist();
     drawBoard();
-    renderLevelMenu();
+    drawHome();
+    if (levelsDialog.open) renderLevelMenu();
   });
   $('#level-list').addEventListener('click', event => {
     const choice = event.target.closest('[data-level]');
     if (!choice) return;
     openLevel(Number(choice.dataset.level));
     levelsDialog.close();
+    if (stage.hidden) enterGame();
   });
 
   document.addEventListener('keydown', event => {
@@ -742,5 +789,5 @@
   new ResizeObserver(resize).observe(paperView);
   localizeInterface();
   openLevel(index);
-  resize();
+  drawHome();
 })();
