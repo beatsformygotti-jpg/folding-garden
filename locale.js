@@ -1,0 +1,123 @@
+'use strict';
+
+const GardenLocale = (() => {
+  const ru = {
+    title: 'Складной сад',
+    description: 'Складывайте бумагу в трёх измерениях и собирайте цветы. 50 головоломок со сгибами.',
+    levels: 'Уровни', menu: 'Меню игры', help: 'Как играть', field: 'Игровое поле', sheet: 'Лист бумаги',
+    creases: 'Линии сгиба', herbarium: 'Гербарий', collected: 'Собранные цветы',
+    undo: 'Отменить ход', restart: 'Начать уровень заново', flip: 'Перевернуть',
+    flipAria: 'Перевернуть лист', close: 'Закрыть', gotIt: 'Понятно', language: 'Язык игры',
+    tapHelp: 'Коснитесь пунктирной линии или кружка, чтобы сложить лист по этой линии.',
+    dragHelp: 'Потяните за кружок, проведите бумагу за середину и отпустите.',
+    collectHelp: 'Совмещайте одинаковые половинки, пока весь лист не окажется в гербарии.',
+    keyHelp: 'С клавиатуры выбирайте линии клавишей Tab и нажимайте Enter.',
+    levelNumber: 'Уровень {number} из {total}', levelGroup: 'Уровни {from}–{to}',
+    campaign: 'Пройдено {done} из {total}', passed: 'Пройден', goldEarned: 'Золотой сгиб',
+    next: 'Следующий уровень', toLevels: 'К уровням',
+    vertical: 'Вертикальный сгиб {number}', horizontal: 'Горизонтальный сгиб {number}',
+    row: 'Ряд {number}. {cells}.', allCollected: 'Все половинки собраны.',
+    emptySlot: 'Пустое место', hole: 'Вырез', stemCell: '{kind}, стебель {direction}',
+    stem0: 'вверх', stem1: 'вправо', stem2: 'вниз', stem3: 'влево',
+    p: 'Мак', d: 'Ромашка', t: 'Тюльпан', i: 'Ирис',
+    complete: 'Уровень пройден.', noMoves: 'Совпадений больше нет. Отмените ход.',
+    turnToFind: 'На этой стороне сгиб не складывается. Переверните лист.',
+    orderNow: 'Сейчас в гербарий: {flower}', face: 'Сторона {side}',
+    goal: 'Сгибы {folds} / {target}', goalLabel: 'Сгибы {folds} из {target} для золота.',
+    best: 'Лучший результат: {folds}', orderedHint: 'Сейчас собирайте цветы одного вида.',
+    firstHint: 'Коснитесь средней линии или потяните за её кружок.',
+    regularHint: 'Совместите одинаковые половинки. Коснитесь линии или потяните за кружок.',
+    nextHint: 'Выберите следующий сгиб.', pullHint: 'Потяните бумагу дальше и отпустите.',
+    releaseHint: 'Проведите бумагу за середину и отпустите.',
+    folding: 'Бумага складывается…', turning: 'Лист переворачивается…',
+    added: 'Цветы в гербарии. Выберите следующий сгиб.',
+    wrongFlowers: 'Половинки различаются. Попробуйте другой сгиб.',
+    wrongStems: 'Стебли смотрят в разные стороны. Проверьте их отражение.',
+    wrongHoles: 'Вырез должен лечь поверх другого выреза.',
+    wrongOrder: 'Гербарий сейчас принимает только цветы вида «{flower}».',
+    wrongEmpty: 'Этот сгиб проходит по пустому участку.',
+    sheetDone: 'Лист собран', campaignDone: 'Гербарий собран',
+    sheetResult: 'Все цветы с листа в гербарии.', campaignResult: 'Вы прошли все 50 уровней.',
+    goldResult: 'Золотой сгиб · {folds} из {target}', goldMissed: 'Сгибы {folds}. Цель для золота {target}.',
+    firstRule: 'Новое правило', goalRule: 'Золотой сгиб', orderRule: 'Букеты по очереди',
+    stemsRule: 'Направление стебля', holesRule: 'Лист с вырезами', flipRule: 'Две стороны',
+    goldHint: 'Число справа показывает, за сколько сгибов вы получите золото.',
+    orderHint: 'Соберите весь текущий вид, прежде чем переходить к следующему.',
+    stemsHint: 'После отражения стебли должны смотреть в одну сторону. Сравните стрелки на бумаге.',
+    holesHint: 'Совмещайте вырез с вырезом и цветок с цветком.',
+    flipHint: 'Нажмите «Перевернуть». На обороте другой рисунок. Сгиб проверяется по верхней стороне.',
+    flipIntro: 'Переверните лист, чтобы найти первые пары. У каждой стороны свой рисунок.'
+  };
+
+  const en = {
+    title: 'Folding Garden',
+    description: 'Fold paper in 3D and collect flowers across 50 mirror-fold puzzles.',
+    levels: 'Levels', menu: 'Game menu', help: 'How to Play', field: 'Play area', sheet: 'Paper sheet',
+    creases: 'Fold lines', herbarium: 'Herbarium', collected: 'Collected flowers',
+    undo: 'Undo move', restart: 'Restart level', flip: 'Flip sheet',
+    flipAria: 'Flip the sheet', close: 'Close', gotIt: 'Got it', language: 'Game language',
+    tapHelp: 'Tap a dashed line or its circle to fold along it.',
+    dragHelp: 'Drag a circle, move the paper past halfway, and release.',
+    collectHelp: 'Match identical halves until every flower on the sheet is in the herbarium.',
+    keyHelp: 'Use Tab to select a fold line and Enter to fold.',
+    levelNumber: 'Level {number} of {total}', levelGroup: 'Levels {from}–{to}',
+    campaign: '{done} of {total} complete', passed: 'Complete', goldEarned: 'Gold fold',
+    next: 'Next Level', toLevels: 'Level Select',
+    vertical: 'Vertical fold {number}', horizontal: 'Horizontal fold {number}',
+    row: 'Row {number}. {cells}.', allCollected: 'All flower halves collected.',
+    emptySlot: 'Empty space', hole: 'Cutout', stemCell: '{kind}, stem points {direction}',
+    stem0: 'up', stem1: 'right', stem2: 'down', stem3: 'left',
+    p: 'Poppy', d: 'Daisy', t: 'Tulip', i: 'Iris',
+    complete: 'Level complete.', noMoves: 'No matches left. Undo a move.',
+    turnToFind: 'There are no matches on this side. Flip the sheet.',
+    orderNow: 'Collect next: {flower}', face: 'Side {side}',
+    goal: 'Folds {folds} / {target}', goalLabel: '{folds} folds. Gold target: {target}.',
+    best: 'Best: {folds}', orderedHint: 'Collect only the highlighted flower type for now.',
+    firstHint: 'Tap the centre line or drag its circle.',
+    regularHint: 'Match identical halves. Tap a line or drag its circle.',
+    nextHint: 'Choose your next fold.', pullHint: 'Pull the paper farther and release.',
+    releaseHint: 'Move the paper past halfway and release.',
+    folding: 'Folding the paper…', turning: 'Turning the sheet…',
+    added: 'Flowers collected. Choose your next fold.',
+    wrongFlowers: 'The halves differ. Try another fold.',
+    wrongStems: 'The stems point in different directions. Check the reflection.',
+    wrongHoles: 'A cutout must line up with another cutout.',
+    wrongOrder: 'The herbarium is collecting this type now: {flower}.',
+    wrongEmpty: 'This fold crosses an empty part of the sheet.',
+    sheetDone: 'Sheet complete', campaignDone: 'Herbarium complete',
+    sheetResult: 'Every flower on this sheet is in the herbarium.', campaignResult: 'You completed all 50 levels.',
+    goldResult: 'Gold earned in {folds} folds.', goldMissed: '{folds} folds. Gold target: {target}.',
+    firstRule: 'New rule', goalRule: 'Gold Fold', orderRule: 'Bouquet Order',
+    stemsRule: 'Stem Direction', holesRule: 'Paper Cutouts', flipRule: 'Two Sides',
+    goldHint: 'The number on the right is the fold count needed for gold.',
+    orderHint: 'Collect every flower of the current type before moving on to the next.',
+    stemsHint: 'Stems must point the same way after reflection. Read the arrows on the paper.',
+    holesHint: 'Line up cutouts with cutouts and flowers with flowers.',
+    flipHint: 'Tap Flip sheet for a different print. Folds use the flowers on the side facing up.',
+    flipIntro: 'Flip the sheet to find the first pairs. Each side has a different print.'
+  };
+
+  // Indexed by the stable level ID, even when the campaign order changes.
+  const titles = [
+    '', 'First Flowers', 'Short Edge', 'Two Bouquets', 'Daisies in the Mirror',
+    'Which Order?', 'Tulips at the Edges', 'First Iris', 'Among the Irises', 'Five Folds',
+    'A Full Herbarium', 'Across the Sheet', 'Two Axes', 'A Bouquet from Both Sides',
+    'Flower Pocket', 'Two Banks', 'A Gridded Sheet', 'Scattered Petals',
+    'Under the Canopy', 'Quiet Flowerbed', 'Along the Fence', 'Pathside', 'Poppies and Irises',
+    'Meeting Strips', 'A Sheet by the Window', 'Bend in the Path', 'Flowering Slope',
+    'Garden Mosaic', 'Shadow on Paper', 'Narrow Margins', 'Patchwork Binding', 'Spring Circle',
+    'Behind the Hedge', 'Wide Flowerbed', 'Parallel Paths', 'Far Corner', 'Garden at Dusk',
+    'Four Sides', 'Long Greenhouse', 'Falling Leaves', 'Woven Fence', 'Petal Maze',
+    'Herbarium Spread', 'Winding Path', 'Great Greenhouse', 'Between the Flowerbeds',
+    'Floral Pattern', 'Garden on the Reverse', 'Before the Finale', 'Paper Labyrinth',
+    'The Whole Garden'
+  ];
+
+  function text(language, key, data = {}) {
+    const raw = (language === 'en' ? en : ru)[key];
+    if (raw === undefined) throw new Error('Unknown translation: ' + key);
+    return raw.replace(/\{(\w+)\}/g, (_, name) => String(data[name] ?? ''));
+  }
+
+  return { text, title: (language, level) => language === 'en' ? titles[level.id] : level.name };
+})();

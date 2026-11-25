@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f4f1e6">
+  <meta name="description" content="Складной сад — головоломка про зеркальные сгибы бумаги и гербарий.">
+  <title>Складной сад</title>
+  <link rel="icon" href="assets/flower.png" type="image/png">
+  <link rel="stylesheet" href="style.css">
+  <script defer src="assets/three.min.js"></script>
+  <script defer src="flowers.js"></script>
+  <script defer src="variants.js"></script>
+  <script defer src="puzzle.js"></script>
+  <script defer src="locale.js"></script>
+  <script defer src="paper.js"></script>
+  <script defer src="game.js"></script>
+</head>
+<body>
+  <div class="phone-frame">
+    <div class="phone-screen">
+      <span class="phone-camera" aria-hidden="true"></span>
+      <main class="stage" id="stage" data-a11y="title" aria-label="Складной сад">
+        <canvas id="ornament" class="ornament" aria-hidden="true"></canvas>
+        <header class="game-head">
+          <div>
+            <p class="eyebrow" id="level-kicker"></p>
+            <h1 id="level-name"></h1>
+          </div>
+          <div class="actions" role="group" data-a11y="menu" aria-label="Меню игры">
+            <button type="button" id="open-levels" class="plain" aria-haspopup="dialog"><span class="icon grid-icon" aria-hidden="true"></span><span data-text="levels">Уровни</span></button>
+            <button type="button" id="open-help" class="plain icon-only" data-control="help" aria-label="Как играть" title="Как играть" aria-haspopup="dialog"><span aria-hidden="true">?</span></button>
+          </div>
+        </header>
+        <section class="paper-area" data-a11y="field" aria-label="Игровое поле">
+          <div class="paper-view" id="paper-view" role="group" data-a11y="sheet" aria-label="Лист бумаги" aria-describedby="paper-description">
+            <p id="paper-description" class="sr-only"></p>
+            <canvas id="guide" aria-hidden="true"></canvas>
+            <canvas id="paper" aria-hidden="true"></canvas>
+            <div id="creases" class="creases" data-a11y="creases" aria-label="Линии сгиба"></div>
+          </div>
+          <div class="result" id="result" hidden>
+            <div class="seal" id="seal" aria-hidden="true"></div>
+            <h2 id="result-title"></h2>
+            <p id="result-text"></p>
+            <p class="medal" id="result-medal" hidden></p>
+            <button type="button" id="continue" class="primary">Следующий уровень</button>
+          </div>
+        </section>
+        <div class="rule-panel" id="rule-panel" hidden>
+          <div class="rule-intro" id="rule-intro" hidden>
+            <strong id="intro-title"></strong>
+            <p id="intro-copy"></p>
+          </div>
+          <div class="rule-indicators" id="rule-indicators">
+            <p class="rule-chip" id="gold-goal" hidden></p>
+            <div class="rule-chip" id="order-goal" hidden></div>
+            <p class="rule-chip face-chip" id="face-goal" hidden></p>
+            <button type="button" id="flip" class="plain flip-button" data-control="flipAria" hidden><span class="flip-icon" aria-hidden="true"></span><span class="flip-label" data-text="flip">Перевернуть</span></button>
+          </div>
+        </div>
+        <footer class="game-foot">
+          <p id="status" role="status" aria-live="polite"></p>
+          <section class="herbarium" aria-labelledby="herbarium-name">
+            <div class="collection-info">
+              <h2 id="herbarium-name" data-text="herbarium">Гербарий</h2>
+              <p class="count" id="count"></p>
+            </div>
+            <ol id="flowers" class="flowers" data-a11y="collected" aria-label="Собранные цветы"></ol>
+          </section>
+          <div class="actions history">
+            <button type="button" id="undo" class="plain icon-only" data-control="undo" aria-label="Отменить ход" title="Отменить ход"><span class="turn-icon" aria-hidden="true"></span></button>
+            <button type="button" id="restart" class="plain icon-only" data-control="restart" aria-label="Начать уровень заново" title="Начать уровень заново"><span class="turn-icon repeat-icon" aria-hidden="true"></span></button>
+          </div>
+        </footer>
+      </main>
+      <dialog id="levels-dialog" aria-labelledby="levels-title">
+        <form method="dialog" class="dialog-head">
+          <h2 id="levels-title" data-text="levels">Уровни</h2>
+          <button type="submit" class="plain icon-only" data-a11y="close" aria-label="Закрыть">×</button>
+        </form>
+        <div class="level-menu-status">
+          <p class="dialog-note" id="campaign-progress"></p>
+          <div class="language-switch" data-a11y="language" role="group" aria-label="Язык игры">
+            <button type="button" data-language="ru" lang="ru" class="plain" aria-label="Русский">RU</button>
+            <button type="button" data-language="en" lang="en" class="plain" aria-label="English">EN</button>
+          </div>
+        </div>
+        <div class="level-list" id="level-list"></div>
+      </dialog>
+      <dialog id="help-dialog" aria-labelledby="help-title">
+        <form method="dialog" class="dialog-head">
+          <h2 id="help-title" data-text="help">Как играть</h2>
+          <button type="submit" class="plain icon-only" data-a11y="close" aria-label="Закрыть">×</button>
+        </form>
+        <ol class="instructions">
+          <li data-text="tapHelp">Коснитесь пунктирной линии или кружка, чтобы сложить лист по этой линии.</li>
+          <li data-text="dragHelp">Чтобы управлять сгибом, тяните кружок в сторону, куда складывается лист. Проведите бумагу за середину и отпустите.</li>
+          <li data-text="collectHelp">Половинки одного вида попадут в гербарий. Если дальше сгибать некуда, отмените ход или начните уровень заново.</li>
+        </ol>
+        <p class="dialog-note" data-text="keyHelp">С клавиатуры выбирайте линии клавишей Tab и нажимайте Enter.</p>
+        <ul class="current-rules" id="current-rules" hidden></ul>
+        <form method="dialog"><button type="submit" class="primary" data-text="gotIt">Понятно</button></form>
+      </dialog>
+    </div>
+  </div>
+  <noscript>Включите JavaScript, чтобы открыть игру. <span lang="en">Enable JavaScript to play.</span></noscript>
+</body>
+</html>
